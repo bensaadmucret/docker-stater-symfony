@@ -1,0 +1,24 @@
+localhost {
+    root * /var/www/html/public
+    encode gzip
+    
+    # Enable PHP-FPM
+    php_fastcgi php:9000
+    
+    # Enable static file serving
+    file_server
+    
+    # Handle 404 errors
+    handle_errors {
+        respond "{err.status_code} {err.status_text}"
+    }
+    
+    # Log access
+    log {
+        output stderr
+        format console
+    }
+
+    # Enable TLS with automatic HTTPS
+    tls internal
+}

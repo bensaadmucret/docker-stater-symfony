@@ -1,0 +1,52 @@
+services:
+  php:
+    build:
+      context: ./docker/php/
+      dockerfile: Dockerfile
+    volumes:
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      - .:/var/www/html
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mariadb
+  mariadb:
+    image: mariadb:10.11.2
+    environment:
+      MARIADB_ROOT_PASSWORD: root_password
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    env_file:
+      - .env.local
+    restart: always
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./docker/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+  caddy:
+    build:
+      context: ./docker/caddy/
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./docker/caddy/caddy.conf:/etc/caddy/caddy.conf
+      - .:/var/www/html
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - php
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+
+# Volumes
+volumes:
+  mariadb_data:
+  caddy_data:
+  caddy_config:

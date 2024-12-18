@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Mon Application Symfony{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title text-center mb-4">Bienvenue sur mon application Symfony ! 🚀</h1>
+                    
+                    <div class="alert alert-success">
+                        <strong>Félicitations !</strong> Votre environnement Docker est correctement configuré avec :
+                        <ul class="mt-2 mb-0">
+                            <li>PHP-FPM pour l'exécution PHP</li>
+                            <li>Caddy comme serveur web (avec HTTPS automatique)</li>
+                            <li>MariaDB comme base de données</li>
+                            <li>Adminer pour la gestion de la base de données</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="mt-4">Liens utiles :</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="https://localhost" class="text-decoration-none">
+                                🏠 Page d'accueil (HTTPS)
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="http://localhost:8080" class="text-decoration-none">
+                                🗄️ Adminer (Gestion de la base de données)
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
